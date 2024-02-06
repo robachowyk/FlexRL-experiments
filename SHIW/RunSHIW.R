@@ -87,18 +87,11 @@ dataSimu = list( pivsA        = encodedA[, pivs],
                  pSameH.varB  = pSameH.varB,
                  include_time = FALSE)
 
-# fit = stEM( data       = dataSimu, 
-#             nIter      = 300, 
-#             nBurnin    = 150, 
-#             MStepIter  = 25,
-#             cutBurninStEM = 150,
-#             trace      = 1 )
-
-fit = stEM( data       = dataSimu, 
-            nIter      = 2, 
-            nBurnin    = 1, 
-            MStepIter  = 1,
-            cutBurninStEM = 1,
+fit = stEM( data       = dataSimu,
+            nIter      = 300,
+            nBurnin    = 150,
+            MStepIter  = 25,
+            cutBurninStEM = 150,
             trace      = 1 )
 
 # save story about linked pairs, NA, agreements
