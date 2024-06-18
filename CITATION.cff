@@ -1,0 +1,33 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: FlexRL
+message: >-
+  If you are happy with FlexRL, please cite us using these
+  metadata.
+type: software
+authors:
+  - given-names: Kayané
+    family-names: Robach
+    email: k.c.robach@amsterdamumc.nl
+    affiliation: AUMC
+    orcid: 'https://orcid.org/0000-0002-5725-623X'
+  - given-names: Michel
+    family-names: Hof
+    email: m.h.hof@amsterdamumc.nl
+    affiliation: AUMC
+repository-code: 'https://github.com/robachowyk/FlexRL'
+abstract: >-
+  'A flexible model for Record Linkage' 
+
+
+  An StEM approach to determine common entities when
+  combining 2 files. 
+
+
+  Includes modeling of dynamic Partially Identifying
+  Variables (e.g. zipcode) that may evolve over time. 
+
+
+  Low memory footprint.

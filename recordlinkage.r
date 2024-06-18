@@ -345,7 +345,7 @@ stEM = function(data, StEMIter, StEMBurnin, GibbsIter, GibbsBurnin, trace=1, Uns
   expalpha = lapply(seq_along(data$PIVs_stable), function(idx) if(data$PIVs_stable[idx]){ c(-Inf) }else{ rep(0.05, ncoef[idx]) })
   
   # Parameters for the registration errors (agreement, missing in A, missing in B)
-  phi = lapply(data$Nvalues, function(x)  c(0.99,0.01,0.01))
+  phi = lapply(data$Nvalues, function(x)  c(0.80,0.01,0.01))
   
   NmissingA = lapply(seq_along(data$Nvalues), function(k) sum(data$A[,data$PIVs][,k]==0))
   NmissingB = lapply(seq_along(data$Nvalues), function(k) sum(data$B[,data$PIVs][,k]==0))
@@ -602,11 +602,11 @@ stEM = function(data, StEMIter, StEMBurnin, GibbsIter, GibbsBurnin, trace=1, Uns
       Ntotal = nGibbsIter * (nrow(data$A) + nrow(data$B))
       phi[[k]][1] = sum(Vphi[[k]][,1]) / (Ntotal - sum(Vphi[[k]][,2]) - sum(Vphi[[k]][,3])) # max( 0.9, sum(Vphi[[k]][,1]) / (Ntotal - sum(Vphi[[k]][,2]) - sum(Vphi[[k]][,3])) )
       phi[[k]][2] = sum(Vphi[[k]][,2]) / (nGibbsIter*nrow(data$A))
-      phi[[k]][3] = sum(Vphi[[k]][,3]) / (nGibbsIter*nrow(data$A))
+      phi[[k]][3] = sum(Vphi[[k]][,3]) / (nGibbsIter*nrow(data$B))
     } 
     if(UnstableNoMistake){
       # There is instability but no mistake so: no identifiability problem
-      # there should be null registration time difference in links 
+      # or there should be null registration time difference in links 
       if(instability){
         for(i in 1:length(unstablePIVs)){
           phi[[ unstablePIVs[i] ]][1] = 1 # proba agreement set to 1 ie proba mistake at 0 for unstable PIV
