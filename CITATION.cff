@@ -1,16 +1,14 @@
 cff-version: 1.2.0
-date-released: "2024-06-18"
-title: FlexRL
-message: If you are happy with FlexRL, please cite us using these metadata.
-type: software
+message: "If you are happy with FlexRL, please cite us using these metadata."
 authors:
-  - given-names: Kayané
-    family-names: Robach
-  - given-names: Michel
-    family-names: Hof
-contact:
-  - affiliation: "Amsterdam Universitair Medische Centra"
-    email: "k.c.robach@amsterdamumc.nl"
-    orcid: 'https://orcid.org/0000-0002-5725-623X'
-repository-code: 'https://github.com/robachowyk/FlexRL'
-abstract: 'A flexible model for Record Linkage' An StEM approach to determine common entities when combining 2 files. Includes modeling of dynamic Partially Identifying Variables (e.g. zipcode) that may evolve over time. Low memory footprint.
+- family-names: "Robach"
+  given-names: "Kayané"
+  orcid: "https://orcid.org/0000-0002-5725-623X"
+  affiliation: "Amsterdam Universitair Medische Centra"
+  email: "k.c.robach@amsterdamumc.nl"
+- family-names: "Hof"
+  given-names: "Michel"
+title: "FlexRL"
+date-released: "2024-06-18"
+repository-code: "https://github.com/robachowyk/FlexRL"
+abstract: "A flexible model for Record Linkage. An StEM approach to determine common entities when combining 2 files. Includes modeling of dynamic Partially Identifying Variables (e.g. zipcode) that may evolve over time. Low memory footprint."
