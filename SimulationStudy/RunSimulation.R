@@ -19,7 +19,7 @@ Rcpp:::sourceCpp("../functions.cpp")
 ################################################################################
 #                          FIX AMOUNT OF ITERATIONS                            #
 ################################################################################
-Nsimu = 2
+Nsimu = 10
 
 ExchangerNSamples = 20000
 ExchangerNBurnin = 10000
@@ -255,7 +255,7 @@ for(iter in 1:Nsimu){
   model <- exchanger(RLdata, attr_params, clust_prior)
   result <- run_inference(model, n_samples=ExchangerNSamples, thin_interval=10, burnin_interval=ExchangerNBurnin)
   pred_clust <- smp_clusters(result)
-  n_records <- nrow(RLdata)
+  ### SAVE RESULTS
   pred_pairs <- clusters_to_pairs(pred_clust)
   comb_pairs <- rbind(true_pairs, pred_pairs)
   true_pairs <- comb_pairs[seq_len(nrow(true_pairs)),]
@@ -269,9 +269,7 @@ for(iter in 1:Nsimu){
   prediction = factor(merged_pairs$pred_match, levels = c(TRUE, FALSE))
   truth = factor(merged_pairs$match, levels = c(TRUE, FALSE))
   CT = table(prediction, truth, dnn = c("Prediction", "Truth"))
-  ### SAVE RESULTS
-  # STORY TELLING
-  # LINKED
+  ### STORY TELLING & INFO ON LINKED RECORDS
   Exchanger_simu_NARL_linked[iter,] = ( ( colSums(is.na(RLdata[df_pred_pairs[,1],])) + colSums(is.na(RLdata[df_pred_pairs[,2],])) ) / nrow(df_pred_pairs) )[PIVs]
   Exchanger_simu_agree_linked_tmp = data.frame( matrix(0, nrow=0, ncol=length(PIVs)) )
   colnames(Exchanger_simu_agree_linked_tmp) = PIVs
@@ -379,8 +377,7 @@ for(iter in 1:Nsimu){
   {
     DeltaBRL[idxA[l], idxB[l]] = 1
   }
-  # STORY TELLING
-  # LINKED
+  ### STORY TELLING & INFO ON LINKED RECORDS
   linkedpairs = which(DeltaBRL>0.5, arr.ind=TRUE)
   linkedpairsA = linkedpairs[,1]
   linkedpairsB = linkedpairs[,2]
@@ -491,7 +488,7 @@ for(iter in 1:Nsimu){
   results_TP[iter, "BRL"] = truepositive
   results_MatrixDistance[iter, "BRL"] = sqrt(sum((DeltaBRL - Delta)**2))
   
-  ### LAUNCH FlexRL with Instability for V5
+  ### 
   encodedA = A
   encodedB = B
   # Value for missing data
@@ -506,9 +503,9 @@ for(iter in 1:Nsimu){
   PIVs = names(PIVs_config)
   PIVs_stable = sapply(PIVs_config, function(x) x$stable)
   
-  ### CHECK THE NAIVE
+  ### LAUNCH SIMPLISTIC APPROACH
   DeltaNaive = matrix(0, nrow=nrow(A), ncol=nrow(B))
-  # A not missing avec all B
+  # A not missing and all B
   isNotMissingA = apply(encodedA[,PIVs]!=0, 1, all)
   A_PIVs_notMissing = encodedA[isNotMissingA,PIVs]
   A_PIVs_notMissing_ID = encodedA[isNotMissingA,"localID"]
@@ -531,7 +528,7 @@ for(iter in 1:Nsimu){
       }
     }
   }
-  # A missing avec all B
+  # A missing and all B
   for(k in 1:length(PIVs)){
     isMissingA_k = encodedA[,k]==0
     A_PIVs_k_Missing = encodedA[isMissingA_k,PIVs]
@@ -556,7 +553,7 @@ for(iter in 1:Nsimu){
       }
     }
   }
-  # B not missing avec all A
+  # B not missing and all A
   isNotMissingB = apply(encodedB[,PIVs]!=0, 1, all)
   B_PIVs_notMissing = encodedB[isNotMissingB,PIVs]
   B_PIVs_notMissing_ID = encodedB[isNotMissingB,"localID"]
@@ -579,7 +576,7 @@ for(iter in 1:Nsimu){
       }
     }
   }
-  # B missing avec all A
+  # B missing and all A
   for(k in 1:length(PIVs)){
     isMissingB_k = encodedB[,k]==0
     B_PIVs_k_Missing = encodedB[isMissingB_k,PIVs]
@@ -604,8 +601,8 @@ for(iter in 1:Nsimu){
       }
     }
   }
-  # STORY TELLING
-  # LINKED
+  ### SAVE RESULTS
+  ### STORY TELLING & INFO ON LINKED RECORDS
   linkedpairs = which(DeltaNaive>0.5, arr.ind=TRUE)
   linkedpairsA = linkedpairs[,1]
   linkedpairsB = linkedpairs[,2]
@@ -731,11 +728,8 @@ for(iter in 1:Nsimu){
                GibbsIter          = FlexRLUnstableGibbsIter,
                GibbsBurnin        = FlexRLUnstableGibbsBurnin,
                UnstableNoMistake  = TRUE  )
-  
   ### SAVE RESULTS
-  # fit$Delta
-  # STORY TELLING
-  # LINKED
+  ### STORY TELLING & INFO ON LINKED RECORDS
   linkedpairs = which(fit$Delta>0.5, arr.ind=TRUE)
   linkedpairsA = linkedpairs[,1]
   linkedpairsB = linkedpairs[,2]
@@ -846,17 +840,17 @@ for(iter in 1:Nsimu){
   results_TP[iter, "FlexRL_instability4V5"] = truepositive
   results_MatrixDistance[iter, "FlexRL_instability4V5"] = sqrt(sum((fit$Delta - Delta)**2))
   # Gamma: proba to form a link
-  fit_gamma = fit$gamma # (fit$gamma)[(FlexRLStableStEMBurnin+1):FlexRLStableStEMIter, drop=FALSE]
-  results_unstable_gamma[iter,] = fit_gamma # 1 vector of length iter post burnin
+  fit_gamma = fit$gamma
+  results_unstable_gamma[iter,] = fit_gamma # 1 vector of length = nbr iter
   # Phi: agreements between registered and truth for links
-  fit_phi = fit$phi # lapply(fit$phi, function(x) x[(FlexRLStableStEMBurnin+1):FlexRLStableStEMIter, , drop=FALSE])
-  results_unstable_phi_agree_V1[iter,] = fit_phi[[1]][,1] # 1 vector of length iter post burnin
+  fit_phi = fit$phi
+  results_unstable_phi_agree_V1[iter,] = fit_phi[[1]][,1] # 1 vector of length = nbr iter
   results_unstable_phi_agree_V2[iter,] = fit_phi[[2]][,1]
   results_unstable_phi_agree_V3[iter,] = fit_phi[[3]][,1]
   results_unstable_phi_agree_V4[iter,] = fit_phi[[4]][,1]
   results_unstable_phi_agree_V5[iter,] = fit_phi[[5]][,1]
   # Alpha: parameter for the survival model for instability
-  fit_alpha = fit$alpha # lapply(fit$alpha, function(x) x[(FlexRLStableStEMBurnin+1):FlexRLStableStEMIter, , drop=FALSE])
+  fit_alpha = fit$alpha
   unstablePIV = which(!PIVs_stable)
   alpha_avg = lapply(fit_alpha, function(x) apply(x, 2, mean))
   links = which(fit$Delta>0.5, arr.ind=TRUE)
@@ -864,7 +858,7 @@ for(iter in 1:Nsimu){
   Xalpha = cbind( times,
                   A[links[,1], PIVs_config[[unstablePIV]]$pSameH.cov.A, drop=FALSE],
                   B[links[,2], PIVs_config[[unstablePIV]]$pSameH.cov.B, drop=FALSE] )
-  results_unstable_alpha_param[iter,] = fit_alpha[[unstablePIV]] # 1 vector of length: iter post burnin
+  results_unstable_alpha_param[iter,] = fit_alpha[[unstablePIV]] # 1 vector of length = nbr iter
   alpha_probaEstimate = exp( - as.matrix(Xalpha) %*% alpha_avg[[unstablePIV]] )
   results_unstable_alpha_probaEstimate[iter,] = append( alpha_probaEstimate, rep(0, NdataA - length(alpha_probaEstimate)) ) # 1 vector of length linked records + filled with 0
   results_unstable_alpha_timesEstimate[iter,] = append( times, rep(0, NdataA - length(alpha_probaEstimate)) ) # 1 vector of length linked records + filled with 0
@@ -895,8 +889,7 @@ for(iter in 1:Nsimu){
                GibbsBurnin        = FlexRLStableGibbsBurnin   )
   
   ### SAVE RESULTS
-  # STORY TELLING
-  # LINKED
+  ### STORY TELLING & INFO ON LINKED RECORDS
   linkedpairs = which(fit$Delta>0.5, arr.ind=TRUE)
   linkedpairsA = linkedpairs[,1]
   linkedpairsB = linkedpairs[,2]
@@ -1007,11 +1000,11 @@ for(iter in 1:Nsimu){
   results_TP[iter, "FlexRL_noinstability"] = truepositive
   results_MatrixDistance[iter, "FlexRL_noinstability"] = sqrt(sum((fit$Delta - Delta)**2))
   # Gamma: proba to form a link
-  fit_gamma = fit$gamma # (fit$gamma)[(FlexRLStableStEMBurnin+1):FlexRLStableStEMIter, drop=FALSE]
-  results_stable_gamma[iter,] = fit_gamma # 1 vector of length iter post burnin
+  fit_gamma = fit$gamma
+  results_stable_gamma[iter,] = fit_gamma # 1 vector of length = nbr iter
   # Phi: agreements between registered and truth for links
-  fit_phi = fit$phi # lapply(fit$phi, function(x) x[(FlexRLStableStEMBurnin+1):FlexRLStableStEMIter, , drop=FALSE])
-  results_stable_phi_agree_V1[iter,] = fit_phi[[1]][,1] # 1 vector of length iter post burnin
+  fit_phi = fit$phi 
+  results_stable_phi_agree_V1[iter,] = fit_phi[[1]][,1] # 1 vector of length = nbr iter
   results_stable_phi_agree_V2[iter,] = fit_phi[[2]][,1]
   results_stable_phi_agree_V3[iter,] = fit_phi[[3]][,1]
   results_stable_phi_agree_V4[iter,] = fit_phi[[4]][,1]
