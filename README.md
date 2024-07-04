@@ -17,3 +17,7 @@ Test for download: <a href="Supplementary%20Material.pdf" download="myimage"><im
 and? <a download="custom-filename.pdf" href="/Supplementary%20Material.pdf" title="ImageName">
     <img alt="ImageName" src="/Supplementary%20Material.pdf">
 </a>
+
+<a href="/Supplementary%20Material.pdf" download>
+
+[est ce que?](Supplementary Material.pdf)
