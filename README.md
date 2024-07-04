@@ -5,3 +5,5 @@ This package implements the Stochastic EM approach to Record Linkage described i
 On this repository you can find the [supplementary material](https://github.com/robachowyk/FlexRL/blob/main/Supplementary%20Material.pdf) to the main article.
 
 For support requests, contact _k dot c dot robach at amsterdamumc dot nl_.
+
+Test for download: <a href="https://github.com/robachowyk/FlexRL/blob/main/Supplementary%20Material.pdf" download="myimage"><img src="https://github.com/robachowyk/FlexRL/blob/main/Supplementary%20Material.pdf" />ands text to click</a> does it work?
