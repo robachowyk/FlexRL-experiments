@@ -21,3 +21,10 @@ and? <a download="custom-filename.pdf" href="/Supplementary%20Material.pdf" titl
 <a href="/Supplementary%20Material.pdf" download>
 
 [est ce que?](Supplementary Material.pdf)
+
+
+[est ce que?](/Supplementary Material.pdf)
+
+[est ce que?](FlexRL/Supplementary Material.pdf)
+
+[est ce que?](https://github.com/robachowyk/FlexRL/Supplementary Material.pdf)
