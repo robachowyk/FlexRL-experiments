@@ -11,3 +11,9 @@ Test for download: <a href="https://github.com/robachowyk/FlexRL/blob/main/Suppl
 Test for download: <a href="main/Supplementary%20Material.pdf" download="myimage"><img src="https://github.com/robachowyk/FlexRL/blob/main/Supplementary%20Material.pdf" />ands text to click</a> does it work?
 
 Test for download: <a href="/Supplementary%20Material.pdf" download="myimage"><img src="https://github.com/robachowyk/FlexRL/blob/main/Supplementary%20Material.pdf" />ands text to click</a> does it work?
+
+Test for download: <a href="Supplementary%20Material.pdf" download="myimage"><img src="https://github.com/robachowyk/FlexRL/blob/main/Supplementary%20Material.pdf" />ands text to click</a> does it work?
+
+and? <a download="custom-filename.pdf" href="/Supplementary%20Material.pdf" title="ImageName">
+    <img alt="ImageName" src="/Supplementary%20Material.pdf">
+</a>
