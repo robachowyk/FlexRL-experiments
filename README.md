@@ -32,3 +32,9 @@ and? <a download="custom-filename.pdf" href="/Supplementary%20Material.pdf" titl
 <a href="Supplementary%20Material.pdf" download>Click to Download</a>
 
 <a href="Supplementary Material.pdf" download>Click to Download</a>
+
+<a id="raw-url" href="https://raw.githubusercontent.com/robachowyk/FlexRL/master/Supplementary%20Material.pdf">Download FILE</a>
+
+<a id="raw-url" href="https://raw.githubusercontent.com/robachowyk/FlexRL/main/Supplementary%20Material.pdf">Download FILE</a>
+
+<a id="raw-url" href="https://raw.githubusercontent.com/robachowyk/FlexRL/blob/main/Supplementary%20Material.pdf">Download FILE</a>
